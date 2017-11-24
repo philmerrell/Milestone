@@ -13,10 +13,4 @@ export class AppComponent {
 
   constructor(public afAuth: AngularFireAuth) {
   }
-  login() {
-    this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-  }
-  logout() {
-    this.afAuth.auth.signOut();
-  }
 }
