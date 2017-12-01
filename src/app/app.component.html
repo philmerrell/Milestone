@@ -1,5 +1,13 @@
 <mat-toolbar color="primary">
-  Milestone
+  <h1>Milestone</h1>
+  <span class="flex-spacer"></span>
+  
+  <user-profile></user-profile>    
 </mat-toolbar>
-<user-profile></user-profile>
-<data-table></data-table>
+<main style="padding: 20px;">
+  <div fxLayout="row" fxLayoutAlign="start start">
+      <live-price fxFlex="50%" currencyType="ETH-USD"></live-price>
+      <live-price fxFlex="50%" currencyType="BTC-USD"></live-price>
+  </div>
+  <router-outlet></router-outlet>
+</main>

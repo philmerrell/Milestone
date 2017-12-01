@@ -10,10 +10,22 @@ import { MaterialModule } from './material/material.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { AuthService } from './core/auth.service';
 import { RouterModule, Routes } from '@angular/router';
-import { DataTableComponent } from './data-table/data-table.component';
+import { WebsocketService } from './websocket.service';
+import { LivePriceModule } from './live-price/live-price.module';
+import { LedgerModule } from './ledger/ledger.module';
+import { LedgerComponent } from './ledger/ledger.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
+import { GdaxService } from './core/gdax.service';
+import { AuthGuard } from './core/auth.guard';
+import { LedgerService } from './ledger/ledger.service';
+import { LivePriceService } from './live-price/live-price.service';
+import { LoginComponent } from './login/login.component';
+
 
 const appRoutes: Routes = [
-  // { path: 'crisis-center', component: CrisisListComponent },
+  { path: '', component: LedgerComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
   // { path: 'hero/:id',      component: HeroDetailComponent },
   // {
   //   path: 'heroes',
@@ -31,7 +43,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     UserProfileComponent,
-    DataTableComponent
+    LoginComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -39,14 +51,21 @@ const appRoutes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    HttpClientModule,
+    LedgerModule,
+    FlexLayoutModule,
+    LivePriceModule,
     MaterialModule,
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
-    )
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    AuthService
+    AuthGuard,
+    AuthService,
+    LivePriceService,
+    // GdaxService,
+    LedgerService,
+    GdaxService,
+    WebsocketService
   ],
   bootstrap: [AppComponent]
 })

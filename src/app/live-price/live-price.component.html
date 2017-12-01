@@ -1,0 +1,14 @@
+<mat-card style="margin: 10px;">
+  <mat-card-header>
+    <img *ngIf="currencyType === 'ETH-USD'" mat-card-avatar height="30" src="assets/ethereum.jpg">
+    <img *ngIf="currencyType === 'BTC-USD'" mat-card-avatar height="30" src="assets/bitcoin.png">
+    
+    <mat-card-title>{{ currencyType }}</mat-card-title>
+    <mat-card-subtitle *ngIf="!liveCurrency$">{{ (currency$ | async)?.price | currency }}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="liveCurrency$">{{ liveCurrency$?.price | currency }}</mat-card-subtitle>
+    
+  </mat-card-header>
+  <mat-card-content>
+      <buy [currency]="currencyType.substr(0,3)"></buy>
+  </mat-card-content>
+</mat-card>

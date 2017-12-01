@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Buy {{ data.currency }}</h2>
+<mat-dialog-content>
+    <!-- <mat-form-field class="example-full-width">
+      <input matInput placeholder="USD" type="number" min="0">
+    </mat-form-field> -->
+    <mat-form-field class="example-full-width">
+      <input name="amount" [(ngModel)]="transaction.amount" [ngModelOptions]="{standalone: true}" matInput [placeholder]="data.currency" type="number" min="0.001">
+      <mat-hint>{{ (transaction.amount * price) | currency }}</mat-hint>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="saveTransaction()">Buy</button>
+</mat-dialog-actions>

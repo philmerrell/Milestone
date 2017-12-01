@@ -1,0 +1,67 @@
+@import '~@angular/material/theming';
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:400,700');
+
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Ubuntu, sans-serif',
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core($custom-typography);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+
+$milestone-primary: (
+  100: #B3E5FC,
+  500: #03A9F4,
+  700: #0288D1,
+  contrast: (
+    100: white,
+    500: white,
+    700: white,
+  )
+);
+
+$milestone-accent: (
+  100: rgb(189, 230, 139),
+  500: #8BC34A,
+  700: rgb(62, 87, 32),
+  contrast: (
+    100: white,
+    500: white,
+    700: white,
+  )
+);
+
+$milestone-warn: (
+  100: #D64309,
+  500: #D64309,
+  700: #D64309,
+  contrast: (
+    100: white,
+    500: white,
+    700: white,
+  )
+);
+
+$milestone-app-primary: mat-palette($milestone-primary);
+$milestone-app-accent:  mat-palette($milestone-accent);
+
+// The warn palette is optional (defaults to red).
+$milestone-app-warn:    mat-palette($milestone-warn);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$milestone-app-theme:   mat-light-theme($milestone-app-primary, $milestone-app-accent, $milestone-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($milestone-app-theme);
