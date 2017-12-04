@@ -8,7 +8,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 import { MaterialModule } from './material/material.module';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { AuthService } from './core/auth.service';
+import { AuthService } from './core/auth/auth.service';
 import { RouterModule, Routes } from '@angular/router';
 import { WebsocketService } from './websocket.service';
 import { LivePriceModule } from './live-price/live-price.module';
@@ -17,14 +17,14 @@ import { LedgerComponent } from './ledger/ledger.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { GdaxService } from './core/gdax.service';
-import { AuthGuard } from './core/auth.guard';
+import { AuthGuard } from './core/auth/auth.guard';
 import { LedgerService } from './ledger/ledger.service';
 import { LivePriceService } from './live-price/live-price.service';
 import { LoginComponent } from './login/login.component';
 
 
 const appRoutes: Routes = [
-  { path: '', component: LedgerComponent, canActivate: [AuthGuard] },
+  { path: '', component: LedgerComponent },
   { path: 'login', component: LoginComponent },
   // { path: 'hero/:id',      component: HeroDetailComponent },
   // {

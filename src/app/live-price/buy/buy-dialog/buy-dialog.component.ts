@@ -27,7 +27,7 @@ export class BuyDialogComponent implements OnInit {
   }
 
   getEthPrice() {
-    this.gdaxService.getPrice('ETH-USD').toPromise()
+    this.gdaxService.getPrice(`${this.data.currency}-USD`).toPromise()
     .then(result => {
       this.price = result['price'];
     });

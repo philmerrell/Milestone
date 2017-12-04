@@ -6,11 +6,14 @@ import { DataTableComponent } from './data-table/data-table.component';
 import { LedgerService } from './ledger.service';
 import { GdaxService } from '../core/gdax.service';
 import { LiveTotalComponent } from './live-total/live-total.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     LedgerComponent,

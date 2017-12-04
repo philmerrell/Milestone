@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LivePriceService } from './live-price.service';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
-import { AuthService } from '../core/auth.service';
+import { AuthService } from '../core/auth/auth.service';
 import { WebsocketService } from '../websocket.service';
 import { GdaxService } from '../core/gdax.service';
 

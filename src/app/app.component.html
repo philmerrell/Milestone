@@ -1,13 +1,28 @@
+
 <mat-toolbar color="primary">
   <h1>Milestone</h1>
   <span class="flex-spacer"></span>
-  
   <user-profile></user-profile>    
 </mat-toolbar>
-<main style="padding: 20px;">
-  <div fxLayout="row" fxLayoutAlign="start start">
-      <live-price fxFlex="50%" currencyType="ETH-USD"></live-price>
-      <live-price fxFlex="50%" currencyType="BTC-USD"></live-price>
-  </div>
-  <router-outlet></router-outlet>
-</main>
+<div *ngIf="auth.user | async; then authenticated else guest">
+  <!-- template will replace this div -->
+</div>
+
+<ng-template #guest style="max-width: 400px;">
+  <h1> login and stuff.</h1>
+</ng-template>
+
+<ng-template #authenticated>
+    <div class="content" [@routerTransition]="o.isActivated && o.activatedRoute.routeConfig.path">
+      <main style="padding: 20px;">
+        <div fxLayout="row" fxLayoutAlign="start start">
+            <live-price fxFlex="50%" currencyType="ETH-USD"></live-price>
+            <live-price fxFlex="50%" currencyType="BTC-USD"></live-price>
+        </div>
+      <router-outlet #o="outlet"></router-outlet>
+      </main>
+    </div>      
+</ng-template>
+
+
+

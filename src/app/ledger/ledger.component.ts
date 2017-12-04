@@ -7,21 +7,34 @@ import { LedgerService } from './ledger.service';
   styleUrls: ['./ledger.component.css']
 })
 export class LedgerComponent implements OnInit {
+  currency = 'ALL';
+  ledger = {};
   ledgerData;
 
   constructor(private ledgerService: LedgerService) { }
 
   ngOnInit() {
-    this.ledgerService.getEthLedger()
+    this.ledgerService.getLedger()
       .subscribe(result => {
-        console.log(result);
-        this.ledgerData = result;
+        this.ledger['all'] = result;
+        this.ledgerData = this.ledger['all'];
+        console.log('hey');
+        this.filterCurrency(this.currency);
       });
   }
 
   deleteLedgerItem(id) {
-    console.log(id);
     this.ledgerService.deleteItem(id);
+  }
+
+  filterCurrency(selection) {
+    const currency = selection['value'];
+    if (currency) {
+      this.ledger[selection] = this.ledger['all'].filter(item => item.currency === currency);
+      this.ledgerData = this.ledger[selection];
+    } else {
+      this.ledgerData = this.ledger['all'];
+    }
   }
 
 }

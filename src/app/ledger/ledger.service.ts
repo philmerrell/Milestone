@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService, User } from '../core/auth.service';
+import { AuthService, User } from '../core/auth/auth.service';
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
@@ -34,7 +34,7 @@ export class LedgerService {
     });
   }
 
-  getEthLedger() {
+  getLedger() {
     return this.user$.switchMap(user => {
       if (user) {
         return this.db.collection(`users/${this.user.uid}/ledger`)

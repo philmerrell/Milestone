@@ -10,13 +10,13 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./data-table.component.css']
 })
 export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
-  ledgerData: Observable<any>;
+  dataSourceData: Observable<any>;
   displayedColumns = ['currency', 'amount', 'price', 'timePurchased', 'actions'];
   dataSource;
   @ViewChild(MatSort) sort: MatSort;
   @Input() data = [];
   @Output() removeItem = new EventEmitter<string>();
-
+  filteredData = {};
 
 
   constructor(private ledgerService: LedgerService) {
@@ -25,6 +25,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes) {
     this.dataSource = new MatTableDataSource<any>(this.data);
+    console.log(this.dataSource);
     this.dataSource.sort = this.sort;
   }
 
@@ -34,6 +35,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
   }
+
 
   ngAfterViewInit() {
   }

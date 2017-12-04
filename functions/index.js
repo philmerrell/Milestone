@@ -16,19 +16,24 @@ exports.addMessage = functions.https.onRequest((req, res) => {
   });
 });
 
-exports.updateUser = functions.firestore
+exports.updateLedgerTotals = functions.firestore
   .document('users/{userId}')
-  .onUpdate(event => {
+  .onWrite(event => {
     // Get an object representing the document
     // e.g. {'name': 'Marie', 'age': 66}
-    var newValue = event.data.data();
-    console.log(event.data.data());
+    const data = event.data.data();
+    console.log(data);
 
-    // ...or the previous value before this update
-    // var previousValue = event.data.previous.data();
+   
+  });
 
-    // access a particular field as you would any JS property
-    // var name = newValue.name;
-
-    // perform desired operations ...
-});
+//   exports.cartadd = functions.database.ref('Cart').onWrite(event => {
+//     const snapshot = event.data;
+//     if (snapshot.hasChildren()) {
+//       var total= 0;
+//       snapshot.forEach(function(item) {
+//          total += item.child('price').val();
+//       });
+//       console.log(total);
+//     }
+// });

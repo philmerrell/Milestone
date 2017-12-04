@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, Input } from '@angular/core';
 import { LivePriceService } from '../../live-price/live-price.service';
 import { LedgerService } from '../ledger.service';
 import { forEach } from '@angular/router/src/utils/collection';
@@ -8,47 +8,48 @@ import { forEach } from '@angular/router/src/utils/collection';
   templateUrl: './live-total.component.html',
   styleUrls: ['./live-total.component.css']
 })
-export class LiveTotalComponent implements OnInit, OnDestroy {
+export class LiveTotalComponent implements OnInit, OnChanges {
+  @Input() currencyType: string;
+  ledger;
   total = 0;
   price = 0;
   amount = 0;
 
   constructor(private priceService: LivePriceService, private ledgerService: LedgerService) { }
 
+  ngOnChanges(changes) {
+    const currency = changes['currencyType'].currentValue;
+    console.log(changes);
+    if (currency) {
+      this.getAmount();
+    }
+  }
   ngOnInit() {
-    // this.priceService.getLivePrice()
-    // .subscribe(msg => {
-    //   const response = msg;
-    //   this.price = parseFloat(response.price) || 0;
-    //   this.calculateTotal();
-    // });
     this.getLedger();
   }
 
-  ngOnDestroy() {
-    // this.priceService.getLivePrice().
-  }
-
   getLedger() {
-    this.ledgerService.getEthLedger().subscribe(ledger => {
-      // console.log('Ledger: ', ledger);
-      // TODO: This should be a property calculated with a cloud function;
-      if (ledger.length) {
-        this.amount = 0;
-        for (const item of ledger) {
-          let float = parseFloat(item.amount);
-          this.amount = this.amount + float;
-        }
-        console.log(this.amount);
-      }
-    });
+    this.ledgerService.getLedger()
+      .subscribe(ledger => this.ledger = ledger);
   }
 
-  calculateTotal() {
+  calculateTotal(currency) {
     this.total = this.price * this.amount || 0;
   }
 
   getTotal() {
+  }
+
+  getAmount() {
+    if (this.ledger.length) {
+      this.amount = 0;
+      for (const item of this.ledger) {
+        if (item.currency === this.currencyType) {
+          const float = parseFloat(item.amount);
+          this.amount = this.amount + float;
+        }
+      }
+    }
   }
 
 

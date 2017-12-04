@@ -28,7 +28,10 @@ export class BuyComponent implements OnInit {
           amount: amount,
           price: result['price'],
         };
-        this.ledgerService.buy(purchase, this.currency);
+        this.ledgerService.buy(purchase, this.currency)
+          .then(item => {
+            console.log('buy', item);
+          });
       });
   }
 
@@ -39,7 +42,9 @@ export class BuyComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.buy(result);
+      if (result) {
+        this.buy(result);
+      }
     });
   }
 
