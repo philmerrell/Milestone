@@ -25,11 +25,11 @@ export class LiveTotalComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit() {
-    this.getLedger();
+    this.getLedger(this.currencyType);
   }
 
-  getLedger() {
-    this.ledgerService.getLedger()
+  getLedger(currency) {
+    this.ledgerService.getLedger(currency)
       .subscribe(ledger => this.ledger = ledger);
   }
 

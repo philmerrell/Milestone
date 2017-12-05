@@ -10,5 +10,6 @@
   </mat-card-header>
   <mat-card-content>
       <buy [currency]="currencyType.substr(0,3)"></buy>
+      <button mat-raised-button [routerLink]="['/wallet', currencyType.substring(0,3)]" color="primary">View Wallet</button>
   </mat-card-content>
 </mat-card>

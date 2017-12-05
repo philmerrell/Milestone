@@ -1,4 +1,4 @@
-<div class="example-container mat-elevation-z8">
+<div *ngIf="data" class="example-container mat-elevation-z8">
     
     <mat-table #table [dataSource]="dataSource" matSort>        
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -26,7 +26,7 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef mat-sort-header>  </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button mat-button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteItem(element.id)">
+          <button mat-button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteItem(element)">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-cell>

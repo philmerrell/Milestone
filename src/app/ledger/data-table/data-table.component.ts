@@ -14,8 +14,8 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   displayedColumns = ['currency', 'amount', 'price', 'timePurchased', 'actions'];
   dataSource;
   @ViewChild(MatSort) sort: MatSort;
-  @Input() data = [];
-  @Output() removeItem = new EventEmitter<string>();
+  @Input() data;
+  @Output() removeItem = new EventEmitter<any>();
   filteredData = {};
 
 
@@ -24,13 +24,16 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes) {
-    this.dataSource = new MatTableDataSource<any>(this.data);
-    console.log(this.dataSource);
-    this.dataSource.sort = this.sort;
+    console.log(changes);
+    console.log(changes.data.currentValue);
+    if (changes.data.currentValue) {
+      this.dataSource = new MatTableDataSource<any>(this.data);
+      this.dataSource.sort = this.sort;
+    }
   }
 
-  deleteItem(id) {
-    this.removeItem.emit(id);
+  deleteItem(item) {
+    this.removeItem.emit(item);
   }
 
   ngOnInit() {

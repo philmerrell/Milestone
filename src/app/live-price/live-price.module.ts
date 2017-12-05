@@ -7,13 +7,15 @@ import { BuyComponent } from './buy/buy.component';
 import { LivePriceService } from './live-price.service';
 import { WebsocketService } from '../websocket.service';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule
   ],
   declarations: [
     BuyComponent,

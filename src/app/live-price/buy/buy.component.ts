@@ -23,14 +23,14 @@ export class BuyComponent implements OnInit {
   buy(amount) {
     this.gdaxService.getPrice(`${this.currency}-USD`).toPromise()
       .then(result => {
-        console.log(result);
         const purchase = {
           amount: amount,
           price: result['price'],
+          currency: this.currency
         };
-        this.ledgerService.buy(purchase, this.currency)
+        this.ledgerService.buy(purchase)
           .then(item => {
-            console.log('buy', item);
+            console.log('bought', item);
           });
       });
   }

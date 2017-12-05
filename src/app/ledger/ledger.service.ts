@@ -18,15 +18,14 @@ export class LedgerService {
     });
   }
 
-  buy(purchase, currency) {
+  buy(purchase) {
     purchase.timePurchased = firebase.firestore.FieldValue.serverTimestamp();
-    purchase.currency = currency;
-    const userRef: AngularFirestoreDocument<any> = this.db.doc(`users/${this.user.uid}`);
-    return this.db.collection(`users/${this.user.uid}/ledger`).add(purchase);
+    return this.db.collection(`users/${this.user.uid}/${purchase.currency}`).add(purchase);
   }
 
-  deleteItem(id) {
-    return this.db.collection(`users/${this.user.uid}/ledger`).doc(id)
+  deleteItem(item) {
+    console.log(item);
+    return this.db.collection(`users/${this.user.uid}/${item.curency}`).doc(item.id)
       .delete().then(function() {
         console.log('Document successfully deleted!');
     }).catch(function(error) {
@@ -34,10 +33,11 @@ export class LedgerService {
     });
   }
 
-  getLedger() {
+  getLedger(currency) {
+    console.log('currency', currency);
     return this.user$.switchMap(user => {
       if (user) {
-        return this.db.collection(`users/${this.user.uid}/ledger`)
+        return this.db.collection(`users/${this.user.uid}/${currency}`)
           .snapshotChanges().map(actions => {
             return actions.map(action => {
               const data = action.payload.doc.data();

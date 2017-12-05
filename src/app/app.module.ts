@@ -25,7 +25,7 @@ import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
   { path: '', component: LedgerComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'wallet/:id', component: LedgerComponent }
   // { path: 'hero/:id',      component: HeroDetailComponent },
   // {
   //   path: 'heroes',

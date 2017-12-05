@@ -1,40 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { LedgerService } from './ledger.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import 'rxjs/add/operator/switchMap';
+
 
 @Component({
   templateUrl: './ledger.component.html',
   styleUrls: ['./ledger.component.css']
 })
 export class LedgerComponent implements OnInit {
-  currency = 'ALL';
-  ledger = {};
-  ledgerData;
+  ledgerData$: Observable<any>;
 
-  constructor(private ledgerService: LedgerService) { }
+  constructor(
+    private ledgerService: LedgerService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.ledgerService.getLedger()
-      .subscribe(result => {
-        this.ledger['all'] = result;
-        this.ledgerData = this.ledger['all'];
-        console.log('hey');
-        this.filterCurrency(this.currency);
-      });
+    this.ledgerData$ = this.route.paramMap
+    .switchMap((params: ParamMap) =>
+      this.getLedger(params.get('id')));
   }
 
-  deleteLedgerItem(id) {
-    this.ledgerService.deleteItem(id);
+  deleteLedgerItem(item) {
+    this.ledgerService.deleteItem(item);
   }
 
-  filterCurrency(selection) {
-    const currency = selection['value'];
-    if (currency) {
-      this.ledger[selection] = this.ledger['all'].filter(item => item.currency === currency);
-      this.ledgerData = this.ledger[selection];
-    } else {
-      this.ledgerData = this.ledger['all'];
-    }
+  getLedger(currency) {
+    return this.ledgerService.getLedger(currency);
   }
 
 }
