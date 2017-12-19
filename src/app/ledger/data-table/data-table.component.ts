@@ -24,8 +24,6 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes) {
-    console.log(changes);
-    console.log(changes.data.currentValue);
     if (changes.data.currentValue) {
       this.dataSource = new MatTableDataSource<any>(this.data);
       this.dataSource.sort = this.sort;

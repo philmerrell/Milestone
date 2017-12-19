@@ -1,0 +1,13 @@
+<div *ngIf="messages$ | async as messages">
+  <mat-list>
+    <mat-list-item *ngFor="let message of messages">
+      {{ message.from }}: {{ message.msg }} <br>
+      {{ message.time | date }}
+    </mat-list-item>
+  </mat-list>
+  <mat-form-field class="example-full-width">
+    <input name="msg" [(ngModel)]="msg" [ngModelOptions]="{standalone: true}" matInput placeholder="message" type="text">
+  </mat-form-field>
+  <button mat-button (click)="sendMessage()">Send</button>
+  
+</div>

@@ -18,11 +18,11 @@ export class LiveTotalComponent implements OnInit, OnChanges {
   constructor(private priceService: LivePriceService, private ledgerService: LedgerService) { }
 
   ngOnChanges(changes) {
-    const currency = changes['currencyType'].currentValue;
-    console.log(changes);
-    if (currency) {
-      this.getAmount();
-    }
+    // const currency = changes['currencyType'].currentValue;
+    // console.log(changes);
+    // if (currency) {
+    //   this.getAmount();
+    // }
   }
   ngOnInit() {
     this.getLedger(this.currencyType);

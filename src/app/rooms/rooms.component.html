@@ -1,0 +1,12 @@
+<div class="content">
+  <div style="padding: 20px;">
+    <button mat-button mat-raised-button (click)="openDialog()">Create a Room</button>
+  </div>
+
+  <mat-list>
+    <mat-list-item *ngFor="let room of rooms$ | async" 
+        [routerLink]="['/rooms', room.id]">
+        {{room.name}}
+    </mat-list-item>
+  </mat-list>
+</div>   

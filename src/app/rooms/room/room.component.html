@@ -1,0 +1,14 @@
+<div *ngIf="room$ | async as room">
+  <h1>{{ room.name }}</h1>
+
+  <div fxLayout="row" fxLayoutAlign="space-between stretch" >
+    <div fxFlex="80">Leaderboard</div>
+    <div fxFlex="20">
+      <messages></messages>
+    </div>
+  </div>
+</div>
+
+<pre>
+  {{ (room$ | async) | json }}
+</pre>

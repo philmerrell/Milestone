@@ -1,10 +1,2 @@
-<!-- <live-total [currencyType]="currency"></live-total> -->
-<!-- <mat-form-field>
-  <mat-select placeholder="Filter currency" (selectionChange)="filterCurrency($event)" [(value)]="currency">
-    <mat-option>All</mat-option>
-    <mat-option value="BTC">BTC</mat-option>
-    <mat-option value="ETH">ETH</mat-option>
-  </mat-select>
-</mat-form-field> -->
-  
+<live-total *ngIf="currency" [currencyType]="currency"></live-total>
 <data-table [data]="ledgerData$ | async" (removeItem)="deleteLedgerItem($event)"></data-table>

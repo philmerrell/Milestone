@@ -11,6 +11,7 @@ import 'rxjs/add/operator/switchMap';
 })
 export class LedgerComponent implements OnInit {
   ledgerData$: Observable<any>;
+  currency = 'ETH';
 
   constructor(
     private ledgerService: LedgerService,
@@ -20,8 +21,18 @@ export class LedgerComponent implements OnInit {
 
   ngOnInit() {
     this.ledgerData$ = this.route.paramMap
-    .switchMap((params: ParamMap) =>
-      this.getLedger(params.get('id')));
+    .switchMap((params: ParamMap) => {
+        const param = params.get('id');
+        if (param) {
+          console.log(this.currency);
+          return this.getLedger(params.get('id'));
+        }
+    });
+
+    this.route.paramMap
+      .subscribe((params: ParamMap) => {
+        this.currency = params.get('id');
+      });
   }
 
   deleteLedgerItem(item) {
@@ -29,6 +40,7 @@ export class LedgerComponent implements OnInit {
   }
 
   getLedger(currency) {
+    this.currency = currency;
     return this.ledgerService.getLedger(currency);
   }
 

@@ -1,0 +1,11 @@
+<div *ngIf="auth.user | async; then authenticated else guest">
+</div>
+
+<ng-template #guest style="max-width: 400px;">
+  <h1> login and stuff.</h1>
+</ng-template>
+
+<ng-template #authenticated>
+    <h1>Home</h1>
+    <a routerLink="/rooms" mat-button color="primary">My Rooms</a>
+</ng-template>

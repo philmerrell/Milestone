@@ -28,8 +28,11 @@ export class BuyComponent implements OnInit {
           price: result['price'],
           currency: this.currency
         };
+
         this.ledgerService.buy(purchase)
-          .then(item => {
+          .then(() => {
+            const item = { amount: -(parseFloat(result['price']) * purchase.amount) };
+            this.ledgerService.debt(item);
             console.log('bought', item);
           });
       });

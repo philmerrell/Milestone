@@ -21,22 +21,19 @@ import { AuthGuard } from './core/auth/auth.guard';
 import { LedgerService } from './ledger/ledger.service';
 import { LivePriceService } from './live-price/live-price.service';
 import { LoginComponent } from './login/login.component';
+import { RoomsModule } from './rooms/rooms.module';
+import { HomeModule } from './home/home.module';
+import { HomeComponent } from './home/home.component';
+import { RoomsComponent } from './rooms/rooms.component';
+import { RoomComponent } from './rooms/room/room.component';
 
 
 const appRoutes: Routes = [
-  { path: '', component: LedgerComponent },
-  { path: 'wallet/:id', component: LedgerComponent }
-  // { path: 'hero/:id',      component: HeroDetailComponent },
-  // {
-  //   path: 'heroes',
-  //   component: HeroListComponent,
-  //   data: { title: 'Heroes List' }
-  // },
-  // { path: '',
-  //   redirectTo: '/heroes',
-  //   pathMatch: 'full'
-  // },
-  // { path: '**', component: PageNotFoundComponent }
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'wallet/:id', component: LedgerComponent },
+  { path: 'rooms', component: RoomsComponent },
+  { path: 'rooms/:id', component: RoomComponent },
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({
@@ -51,11 +48,13 @@ const appRoutes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    HomeModule,
     HttpClientModule,
     LedgerModule,
     FlexLayoutModule,
     LivePriceModule,
     MaterialModule,
+    RoomsModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

@@ -8,36 +8,69 @@ import * as firebase from 'firebase';
 export class LedgerService {
   user: User;
   user$: Observable<User>;
-  ethLedger$: Observable<any>;
+  userDoc: any;
+  docRef;
 
   constructor(private auth: AuthService, private db: AngularFirestore) {
     this.user$ = auth.user;
     auth.user.subscribe(user => {
       this.user = user;
-      console.log(user);
+      this.getDocRef();
+      this.getDocData();
     });
+
+
+  }
+
+  getDocData() {
+    this.docRef.valueChanges()
+      .subscribe(doc => {
+        this.userDoc = doc;
+      });
+  }
+
+  getDocRef() {
+    this.docRef = this.db.collection(`users`).doc(`${this.user.uid}`);
   }
 
   buy(purchase) {
+    const currentTotal = this.userDoc[purchase.currency] || 0;
+    const amount =  currentTotal + purchase.amount;
+    let update = {};
+    update[purchase.currency] = amount;
+    this.docRef.update(update);
     purchase.timePurchased = firebase.firestore.FieldValue.serverTimestamp();
-    return this.db.collection(`users/${this.user.uid}/${purchase.currency}`).add(purchase);
+    return this.docRef
+      .collection(`${purchase.currency}`)
+      .add(purchase);
+  }
+
+  debt(currency) {
+    const currentTotal = this.userDoc['USD'] || 0;
+    console.log(currentTotal);
+    const amount =  currentTotal + currency.amount;
+    console.log(amount);
+    let update = {};
+    update['USD'] = amount;
+    this.docRef.update(update);
+    return this.docRef
+      .collection(`USD`)
+      .add(currency);
   }
 
   deleteItem(item) {
-    console.log(item);
-    return this.db.collection(`users/${this.user.uid}/${item.curency}`).doc(item.id)
-      .delete().then(function() {
-        console.log('Document successfully deleted!');
+    return this.docRef.collection(item.currency).doc(item.id)
+      .delete().then(function(del) {
+        console.log(del, 'Document successfully deleted!');
     }).catch(function(error) {
       console.error('Error removing document: ', error);
     });
   }
 
   getLedger(currency) {
-    console.log('currency', currency);
     return this.user$.switchMap(user => {
       if (user) {
-        return this.db.collection(`users/${this.user.uid}/${currency}`)
+        return this.docRef.collection(`/${currency}`)
           .snapshotChanges().map(actions => {
             return actions.map(action => {
               const data = action.payload.doc.data();
@@ -50,6 +83,5 @@ export class LedgerService {
       }
     });
   }
-
 
 }
